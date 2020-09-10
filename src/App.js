@@ -3,31 +3,27 @@ import './App.css';
 import {
   BrowserRouter,
   Route,
+  Redirect,
   Switch
 } from 'react-router-dom';
 import axios from 'axios';
 import apiKey from './Config';
 
-import PhotoContainer from './Components/Container';
 import Nav from './Components/Nav';
 import NotFound from './Components/NotFound';
 import Photo from './Components/Photo';
 import SearchForm from './Components/SearchForm';
 import PhotoList from './Components/PhotoList';
 
+class App extends Component {
 
-class Main extends Component {
-
-constructor(){
-  super();
-    this.state = {
+ state = {
       cats: [],
       dogs: [],
       computers: [],
       loading: true,
       search: ''
-    }
-  }
+}
 
   componentDidMount() {
     this.performSearch();
@@ -90,50 +86,29 @@ performSearch = (query) => {
     });
   }
 
-}
+  render(){
 
-function App() {
+    return (
+      <BrowserRouter>
+        <div className="App">
+          <SearchForm search={this.performSearch}/>
+          <Nav/>
+          <div className="main-content">
+          <PhotoList/>
+            <Switch>
+              <Route exact path="/" render={ () => (<PhotoList data={this.state.search} loading={this.state.loading} /> )}/>
+              <Route path="/cats" render={ () => (<PhotoList data={this.state.cats} loading={this.state.loading} /> )}/>
+              <Route path="/dogs" render={ () => (<PhotoList data={this.state.dogs} loading={this.state.loading} /> )}/>
+              <Route path="/computers" render={ () => (<PhotoList data={this.state.dogs} loading={this.state.loading} /> )}/>
+              <Route component={NotFound} />
+            </Switch>
+          </div>
+        </div>
+      </BrowserRouter>
 
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" render={(() => (<PhotoContainer data={this.state.search} loading={this.sate.loading}/>} />
-        <Route path={`/search/${this.state.query}`} render={()=>(<PhotoContainer data={this.state.search} loading={this.state.loading} query={this.state.query} /> )}/
-        <Route path="/" component={PhotoContainer} />
-        <Route path="/" component={PhotoContainer} />
-      </Switch>
+    )
+  }
 
-      <SearchForm/>
-      <Nav/>
-      <PhotoContainer/>
-
-    </BrowserRouter>
-        //<div className="App">
-      //  <div className="main-content">
-
-      //  </div>
-    //  </div>
-
-
-  );
 }
 
 export default App;
-
-/*
-<header className="App-header">
-
-</header>
-<img src={logo} className="App-logo" alt="logo" />
-<p>
-  Edit <code>src/App.js</code> and save to reload.
-</p>
-<a
-  className="App-link"
-  href="https://reactjs.org"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  Learnssdsdddeddd
-</a>
-*/

@@ -1,13 +1,19 @@
-import React from 'react';
+
+import React, { Component } from 'react';
 import Photo from './Photo';
+import '../index.css';
 import NotFound from './NotFound';
 
-const PhotoList = props => {
+const PhotoList = (props) => {
+
   const results = props.data;
   let photos;
   if (results.length > 0){
-    photos = results.map(photo => <Photo url={photo.images.fixed_height.url} key={photo.id}/>);
-  } else{
+    photos = results.map((photo) => {
+      const urlSource = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_m.jpg`;
+      return <Photo url={urlSource} key={photo.id} desc={photo.title} />;
+    });
+  }else{
     photos = <NotFound/>
   }
   return(
@@ -17,5 +23,6 @@ const PhotoList = props => {
     </div>
   );
 }
+
 
 export default PhotoList;
