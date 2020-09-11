@@ -24,14 +24,15 @@ class App extends Component {
           <SearchForm search={this.performSearch}/>
           <Nav/>
           <div className="main-content">
-          <PhotoList/>
             <Switch>
               <Route exact path="/" render={ () => (<PhotoList data={this.state.search} loading={this.state.loading} /> )}/>
               <Route path="/cats" render={ () => (<PhotoList data={this.state.cats} loading={this.state.loading} /> )}/>
               <Route path="/dogs" render={ () => (<PhotoList data={this.state.dogs} loading={this.state.loading} /> )}/>
-              <Route path="/computers" render={ () => (<PhotoList data={this.state.dogs} loading={this.state.loading} /> )}/>
+              <Route path="/computers" render={ () => (<PhotoList data={this.state.computers} loading={this.state.loading} /> )}/>
               <Route component={NotFound} />
             </Switch>
+            <PhotoList/>
+
           </div>
         </div>
       </BrowserRouter>

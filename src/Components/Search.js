@@ -5,14 +5,13 @@ import axios from 'axios';
 class Search extends Component{
   constructor(props){
     super(props);
-    state = {
-         performSearch: [],
+    this.state = {
+         search: [],
          cats: [],
          dogs: [],
          computers: [],
-         loading: true,
-         search: ''
-    };
+         loading: true
+       };
   }
    componentDidMount() {
      this.performSearch();
@@ -26,7 +25,8 @@ class Search extends Component{
    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
    .then(response => {
      this.setState({
-       performSearch: response.data.photos.photo,
+       search: response.photos.photo,
+       loading: false
      });
    })
    .catch(error => {
