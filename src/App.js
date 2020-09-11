@@ -6,85 +6,15 @@ import {
   Redirect,
   Switch
 } from 'react-router-dom';
-import axios from 'axios';
-import apiKey from './Config';
 
 import Nav from './Components/Nav';
 import NotFound from './Components/NotFound';
 import Photo from './Components/Photo';
 import SearchForm from './Components/SearchForm';
 import PhotoList from './Components/PhotoList';
+import Search from './Components/Search'
 
 class App extends Component {
-
- state = {
-      cats: [],
-      dogs: [],
-      computers: [],
-      loading: true,
-      search: ''
-}
-
-  componentDidMount() {
-    this.performSearch();
-    this.catSearch();
-    this.dogSearch();
-    this.computerSearch();
-  }
-
-//Search Feed Data
-performSearch = (query) => {
-  axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
-  .then(response => {
-    this.setState({
-      photos: response.data.photos.photo,
-      loading: false
-    });
-  })
-  .catch(error => {
-  console.log('Error fetching and parsing data', error);
-  });
-}
-
-//Button Fetching Data
-  catSearch = (query = 'Cats') => {
-    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
-    .then(response => {
-      this.setState({
-        photos: response.data.photos.photo,
-        loading: false
-      });
-    })
-    .catch(error => {
-    console.log('Error fetching and parsing data', error);
-    });
-  }
-
-  dogSearch = (query = 'Dogs') => {
-    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
-    .then(response => {
-      this.setState({
-        photos: response.data.photos.photo,
-        loading: false
-      });
-    })
-    .catch(error => {
-    console.log('Error fetching and parsing data', error);
-    });
-  }
-
-  computerSearch = (query = 'Computers') => {
-    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
-    .then(response => {
-      this.setState({
-        photos: response.data.photos.photo,
-        loading: false
-      });
-    })
-    .catch(error => {
-    console.log('Error fetching and parsing data', error);
-    });
-  }
 
   render(){
 
@@ -108,7 +38,6 @@ performSearch = (query) => {
 
     )
   }
-
 }
 
 export default App;
