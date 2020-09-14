@@ -9,7 +9,6 @@ import {
 
 import Nav from './Components/Nav';
 import NotFound from './Components/NotFound';
-import Photo from './Components/Photo';
 import SearchForm from './Components/SearchForm';
 import PhotoList from './Components/PhotoList';
 import apiKey from './Components//Config.js';
@@ -99,11 +98,11 @@ class App extends Component {
           <Nav/>
             <Switch>
               <Route exact path="/" render={() => <Redirect to="/cats" />} />
-              <Route exact path ={'/search/:query'} render={()=>(<PhotoList data={this.state.search} loading={this.state.loading} query={this.state.query} /> )}/>
+              <Route exact path ={'/search/:query'} render={()=>(<PhotoList data={this.state.search} loading={this.state.loading}/> )}/>
               <Route path="/cats" render={ () => (<PhotoList data={this.state.cats} loading={this.state.loading} /> )}/>
               <Route path="/dogs" render={ () => (<PhotoList data={this.state.dogs} loading={this.state.loading} /> )}/>
               <Route path="/computers" render={ () => (<PhotoList data={this.state.computers} loading={this.state.loading} /> )}/>
-              <Route path='/' component={NotFound} />
+              <Route component={NotFound} />
             </Switch>
         </div>
       </BrowserRouter>
