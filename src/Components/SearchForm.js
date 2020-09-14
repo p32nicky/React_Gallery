@@ -5,7 +5,8 @@ import { withRouter } from 'react-router-dom'
 class SearchForm extends Component {
 
   state = {
-    searchText: ''
+    searchText: '',
+    loading: true
   }
 
   onSearchChange = e => {
@@ -16,10 +17,11 @@ class SearchForm extends Component {
     e.preventDefault();
     this.props.onSearch(this.searchText.value);
 
-    //let searchQuery = this.state.searchText;
+    let query = this.state.searchText;
     let path = `/search/${this.searchText.value}`;
     this.props.history.push(path);
-//    e.currentTarget.reset();
+
+    e.currentTarget.reset();
 
   }
 

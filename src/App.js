@@ -37,12 +37,12 @@ class App extends Component {
    }
 
   //Search Feed Data
-  performSearch = (query = this.searchText) => {
+  performSearch = (query) => {
    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
    .then(response => {
      this.setState({
        search: response.photos.photo,
-       loading: true
+       loading: false
      });
    })
    .catch(error => {
@@ -100,8 +100,8 @@ class App extends Component {
           <div className="main-content">
             <Switch>
               <Route exact path="/" render={ () => (<PhotoList data={this.state.cats} loading={this.state.loading} /> )}/>
-              <Route exact path={'/search/:query'} render={()=>(<PhotoList data={this.state.search} loading={this.state.loading} /> )}/>
-
+              <Route path={'/search/:query'} render={()=>(<PhotoList data={this.state.search} query={this.performSearch} loading={this.state.loading} /> )}/>
+          //    <Route path="/search/:query" render={() => <PhotoList title='Search results' search={this.state.search} query={this.performSearch} data={this.state.photos} loading={this.state.loading} />} />
               <Route path="/cats" render={ () => (<PhotoList data={this.state.cats} loading={this.state.loading} /> )}/>
               <Route path="/dogs" render={ () => (<PhotoList data={this.state.dogs} loading={this.state.loading} /> )}/>
               <Route path="/computers" render={ () => (<PhotoList data={this.state.computers} loading={this.state.loading} /> )}/>
