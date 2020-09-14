@@ -14,10 +14,10 @@ class SearchForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.search(this.searchText.value);
     let path = `/search/${this.searchText.value}`;
+    this.props.onSearch(this.searchText.value);
+
     this.props.history.push(path);
-    this.props.searchText = this.query.value;
     e.currentTarget.reset();
   }
 
