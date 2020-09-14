@@ -100,7 +100,7 @@ class App extends Component {
           <div className="main-content">
             <Switch>
               <Route exact path="/" render={ () => (<PhotoList data={this.state.cats} loading={this.state.loading} /> )}/>
-              <Route path={'/search/:query'} render={()=>(<PhotoList data={this.state.search} query={this.state.search} loading={this.state.loading} /> )}/>
+              <Route path={'/search/:query'} render={()=>(<PhotoList data={this.state.search} loading={this.state.loading} /> )}/>
               <Route path="/cats" render={ () => (<PhotoList data={this.state.cats} loading={this.state.loading} /> )}/>
               <Route path="/dogs" render={ () => (<PhotoList data={this.state.dogs} loading={this.state.loading} /> )}/>
               <Route path="/computers" render={ () => (<PhotoList data={this.state.computers} loading={this.state.loading} /> )}/>
