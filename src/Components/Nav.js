@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
 
+//Navigation buttons using NavLink
 const Nav = () => {
   return(
     <nav className="main-nav">

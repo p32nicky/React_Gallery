@@ -10,7 +10,7 @@ import Nav from './Components/Nav';
 import NotFound from './Components/NotFound';
 import SearchForm from './Components/SearchForm';
 import PhotoList from './Components/PhotoList';
-import apiKey from './Components//Config.js';
+import apiKey from './Components/Config.js';
 import axios from 'axios';
 
 class App extends Component {
@@ -28,6 +28,8 @@ class App extends Component {
 
        };
   }
+
+  //Mounting this.performSearch in SearchForm
    componentDidMount() {
      this.catSearch();
      this.dogSearch();
@@ -35,12 +37,10 @@ class App extends Component {
      this.sunsetDefault();
    }
 
-  //Search Feed Data
+  //Made an extra one for sunsets which is default view.
   performSearch = (query = this.search) => {
-    console.log(query)
    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
    .then(response => {
-     console.log(response);
      this.setState({
        search: response.data.photos.photo,
        loading: true
@@ -54,7 +54,6 @@ class App extends Component {
   sunsetDefault = (query = 'sunset') => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
     .then(response => {
-      console.log(response)
 
       this.setState({
         sunsets: response.data.photos.photo,
@@ -69,8 +68,6 @@ class App extends Component {
    catSearch = (query = 'Cats') => {
      axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
      .then(response => {
-       console.log(response)
-
        this.setState({
          cats: response.data.photos.photo,
          loading: false
@@ -108,7 +105,7 @@ class App extends Component {
    }
 
   render(){
-
+//Initially loads sunsets
     return (
       <BrowserRouter>
       <div className="container">
@@ -116,7 +113,7 @@ class App extends Component {
             <Nav/>
             <Switch>
               <Route exact path="/" render={() => (<PhotoList data={this.state.sunsets} loading={this.state.loading} /> )}/>
-              <Route path ={'/search/:query'} render={()=>(<PhotoList data={this.state.search} loading={this.state.loading}/> )}/>
+              <Route exact path ={'/search/:query'} render={()=>(<PhotoList data={this.state.search} loading={this.state.loading}/> )}/>
               <Route exact path="/cats" render={ () => (<PhotoList data={this.state.cats} loading={this.state.loading} /> )}/>
               <Route exact path="/dogs" render={ () => (<PhotoList data={this.state.dogs} loading={this.state.loading} /> )}/>
               <Route exact path="/computers" render={ () => (<PhotoList data={this.state.computers} loading={this.state.loading} /> )}/>

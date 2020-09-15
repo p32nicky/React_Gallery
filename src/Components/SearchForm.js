@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {withRouter} from 'react-router';
+//Needed withRouter to be able to use history
 
 class SearchForm extends Component {
 
@@ -14,20 +15,18 @@ class SearchForm extends Component {
   handleSubmit = e => {
 
     e.preventDefault();
-    this.props.onSearch(this.performSearch);
-
-
     let path = `./search/${this.query.value}`;
     this.props.onSearch(this.state.searchText);
-    this.props.history.push("");
+    this.props.history.push("/");
+    //If I didn't push to a clear url it would keep adding /search each time you searched.
     this.props.history.push(path);
     e.currentTarget.reset();
 
   }
 
-
   render(){
     return(
+    //I forgot the form needed a onSubmit. This was a challenge.  
     <form className="search-form" onSubmit={this.handleSubmit} >
       <input type='search' onChange={this.onSearchChange} name="search" placeholder="Search For Something..." ref={(input) => this.query = input} required/>
       <button type="submit" className="search-button" >
