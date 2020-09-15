@@ -19,6 +19,7 @@ class App extends Component {
     super(props);
     this.state = {
          search: [],
+         sunsets: [],
          cats: [],
          dogs: [],
          computers: [],
@@ -31,6 +32,7 @@ class App extends Component {
      this.catSearch();
      this.dogSearch();
      this.computerSearch();
+     this.sunsetDefault();
    }
 
   //Search Feed Data
@@ -49,7 +51,21 @@ class App extends Component {
    });
   }
 
-  //Button Fetching Data
+  sunsetDefault = (query = 'sunset') => {
+    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
+    .then(response => {
+      console.log(response)
+
+      this.setState({
+        sunsets: response.data.photos.photo,
+        loading: false
+      });
+    })
+    .catch(error => {
+    console.log('Error fetching and parsing data', error);
+    });
+  }
+
    catSearch = (query = 'Cats') => {
      axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
      .then(response => {
@@ -96,11 +112,11 @@ class App extends Component {
     return (
       <BrowserRouter>
       <div className="container">
-          <SearchForm render={() => (<PhotoList query={this.state.query} onSearch={this.performSearch}/> )}/>
+          <SearchForm query={this.state.query} onSearch={this.performSearch}/>
           <Nav/>
             <Switch>
-              <Route exact path="/" render={() => (<PhotoList data={this.state.cats} loading={this.state.loading} /> )}/>
-              <Route path ={'/search/:query'} render={()=>(<PhotoList data={this.state.search} loading={this.state.loading}/> )}/>
+              <Route exact path="/" render={() => (<PhotoList data={this.state.sunsets} loading={this.state.loading} /> )}/>
+              <Route exact path ={'/search/:query'} render={()=>(<PhotoList data={this.state.search} loading={this.state.loading}/> )}/>
               <Route path="/cats" render={ () => (<PhotoList data={this.state.cats} loading={this.state.loading} /> )}/>
               <Route path="/dogs" render={ () => (<PhotoList data={this.state.dogs} loading={this.state.loading} /> )}/>
               <Route path="/computers" render={ () => (<PhotoList data={this.state.computers} loading={this.state.loading} /> )}/>
