@@ -112,11 +112,11 @@ class App extends Component {
     return (
       <BrowserRouter>
       <div className="container">
-          <SearchForm query={this.state.query} onSearch={this.performSearch}/>
+          <SearchForm onsearch={this.performSearch}/>
           <Nav/>
             <Switch>
               <Route exact path="/" render={() => (<PhotoList data={this.state.sunsets} loading={this.state.loading} /> )}/>
-              <Route exact path ={'/search/:query'} render={()=>(<PhotoList data={this.state.search} loading={this.state.loading}/> )}/>
+              <Route path ={'/search/:query'} render={()=>(<PhotoList data={this.state.search} loading={this.state.loading}/> )}/>
               <Route path="/cats" render={ () => (<PhotoList data={this.state.cats} loading={this.state.loading} /> )}/>
               <Route path="/dogs" render={ () => (<PhotoList data={this.state.dogs} loading={this.state.loading} /> )}/>
               <Route path="/computers" render={ () => (<PhotoList data={this.state.computers} loading={this.state.loading} /> )}/>
