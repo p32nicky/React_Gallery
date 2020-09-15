@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
+import {withRouter} from 'react-router';
 
-//Put in event handler
-export default class SearchForm extends Component {
+class SearchForm extends Component {
 
   state = {
     searchText: "",
-  }
+  };
 
-  onSearchChange = e => {
+  onSearchChange = (e) => {
     this.setState({ searchText: e.target.value });
-  }
+   };
 
   handleSubmit = e => {
-    this.props.performSearch(this.performSearch);
+    this.props.onSearch(this.performSearch);
     e.preventDefault();
 
     let path = `./search/${this.searchText.value}`;
@@ -36,3 +36,4 @@ export default class SearchForm extends Component {
     </form>
   )};
 }
+export default withRouter(SearchForm);
