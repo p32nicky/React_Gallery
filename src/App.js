@@ -116,10 +116,10 @@ class App extends Component {
             <Nav/>
             <Switch>
               <Route exact path="/" render={() => (<PhotoList data={this.state.sunsets} loading={this.state.loading} /> )}/>
-              <Route exact path ={'/search/:query'} render={()=>(<PhotoList data={this.state.search} loading={this.state.loading}/> )}/>
-              <Route path="/cats" render={ () => (<PhotoList data={this.state.cats} loading={this.state.loading} /> )}/>
-              <Route path="/dogs" render={ () => (<PhotoList data={this.state.dogs} loading={this.state.loading} /> )}/>
-              <Route path="/computers" render={ () => (<PhotoList data={this.state.computers} loading={this.state.loading} /> )}/>
+              <Route path ={'/search/:query'} render={()=>(<PhotoList data={this.state.search} loading={this.state.loading}/> )}/>
+              <Route exact path="/cats" render={ () => (<PhotoList data={this.state.cats} loading={this.state.loading} /> )}/>
+              <Route exact path="/dogs" render={ () => (<PhotoList data={this.state.dogs} loading={this.state.loading} /> )}/>
+              <Route exact path="/computers" render={ () => (<PhotoList data={this.state.computers} loading={this.state.loading} /> )}/>
               <Route component={NotFound} />
             </Switch>
         </div>
