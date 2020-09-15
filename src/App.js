@@ -28,19 +28,20 @@ class App extends Component {
        };
   }
    componentDidMount() {
-     this.performSearch();
      this.catSearch();
      this.dogSearch();
      this.computerSearch();
    }
 
   //Search Feed Data
-  performSearch = (query = this.props.search) => {
+  performSearch = (query = this.search) => {
+    console.log(query)
    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
    .then(response => {
+     console.log(response);
      this.setState({
        search: response.data.photos.photo,
-       loading: false
+       loading: true
      });
    })
    .catch(error => {
@@ -52,6 +53,8 @@ class App extends Component {
    catSearch = (query = 'Cats') => {
      axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
      .then(response => {
+       console.log(response)
+
        this.setState({
          cats: response.data.photos.photo,
          loading: false
@@ -93,11 +96,11 @@ class App extends Component {
     return (
       <BrowserRouter>
       <div className="container">
-          <SearchForm data={this.state.search} search={this.performSearch}/>
+          <SearchForm render={() => (<PhotoList query={this.state.query} onSearch={this.performSearch}/> )}/>
           <Nav/>
             <Switch>
               <Route exact path="/" render={() => (<PhotoList data={this.state.cats} loading={this.state.loading} /> )}/>
-              <Route exact path ={'/search/:query'} render={()=>(<PhotoList data={this.state.search} loading={this.state.loading}/> )}/>
+              <Route path ={'/search/:query'} render={()=>(<PhotoList data={this.state.search} loading={this.state.loading}/> )}/>
               <Route path="/cats" render={ () => (<PhotoList data={this.state.cats} loading={this.state.loading} /> )}/>
               <Route path="/dogs" render={ () => (<PhotoList data={this.state.dogs} loading={this.state.loading} /> )}/>
               <Route path="/computers" render={ () => (<PhotoList data={this.state.computers} loading={this.state.loading} /> )}/>
