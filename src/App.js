@@ -10,7 +10,7 @@ import Nav from './Components/Nav';
 import NotFound from './Components/NotFound';
 import SearchForm from './Components/SearchForm';
 import PhotoList from './Components/PhotoList';
-import apiKey from './Components/Config.js';
+import apiKey from './Components//Config.js';
 import axios from 'axios';
 
 class App extends Component {
@@ -36,7 +36,20 @@ class App extends Component {
    }
 
   //Search Feed Data
-
+  performSearch = (query = this.search) => {
+    console.log(query)
+   axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
+   .then(response => {
+     console.log(response);
+     this.setState({
+       search: response.data.photos.photo,
+       loading: true
+     });
+   })
+   .catch(error => {
+   console.log('Error fetching and parsing data', error);
+   });
+  }
 
   sunsetDefault = (query = 'sunset') => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
@@ -99,8 +112,8 @@ class App extends Component {
     return (
       <BrowserRouter>
       <div className="container">
-          <SearchForm/>
-          <Nav/>
+          <SearchForm query={this.state.query} onSearch={this.performSearch}/>
+            <Nav/>
             <Switch>
               <Route exact path="/" render={() => (<PhotoList data={this.state.sunsets} loading={this.state.loading} /> )}/>
               <Route exact path ={'/search/:query'} render={()=>(<PhotoList data={this.state.search} loading={this.state.loading}/> )}/>
